@@ -163,5 +163,6 @@ cython_debug/
 
 
 2.deploy_RShiny/notebooks/1.deploy_shiny_app.ipynb
+2.deploy_RShiny/scripts/1.deploy_shiny_app.r
 2.deploy_RShiny/NIH_grants_app/rsconnect
 data
