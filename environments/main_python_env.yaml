@@ -1,0 +1,15 @@
+name: NIH_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - numpy
+  - pandas
+  - IPython
+  - jupyter
+  - ipykernel
+  - pyarrow
+  - pip:
+    - openpyxl
