@@ -1,9 +1,10 @@
 library(shiny)
 library(shinyWidgets)
+library(rsconnect)
 
 # Define UI
 ui <- fluidPage(
-  titlePanel("NIH Grants Explorer"),
+  titlePanel("NIH Grants Explorer, 2023 Data."),
 
   sidebarLayout(
     sidebarPanel(

@@ -2,10 +2,10 @@
 
 # This script will call the other scripts
 
-# create the environments
-# cd environments
-# source create_envs.sh
-# cd ../
+# # create the environments
+cd environments
+source create_envs.sh
+cd ../
 
 # Download the data
 conda activate NIH_env
@@ -28,7 +28,6 @@ jupyter nbconvert --to=script --FilesWriter.build_directory=scripts/ notebooks/*
 conda deactivate
 conda activate NIH_R_env
 cd scripts
-RScript 0.test_plots_for_shiny.r
 RScript 1.deploy_shiny_app.r
 cd ../../
 conda deactivate

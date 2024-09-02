@@ -39,8 +39,6 @@ funding_vs_success_plot <- ggMarginal(funding_vs_success_plot, type="density")
 funding_vs_success_plot
 
 
-
-
 # plot the success rate of the projects by Activity Code and Institute
 height <- 10
 width <- 20

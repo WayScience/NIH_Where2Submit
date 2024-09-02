@@ -14,25 +14,39 @@ if (!require(patchwork)) {
 if (!require(ggplotify)) {
   install.packages("ggplotify")
 }
+if (!require(rsconnect)) {
+  install.packages("rsconnect")
+}
 
 
 library(patchwork)
 library(ggExtra)
 library(ggplotify)
+library(rsconnect)
 
 # Define server logic
 server <- function(input, output, session) {
   df <- arrow::read_parquet("All_academic_projects_funded_by_NIH_cleaned.parquet")
   df$combined_institute_and_activity <- paste(df$`Institute/Center`, df$`Activity Code`, sep = " - ")
   df$`Total Funding` <- df$`Total Funding` / 1000000 # Convert to millions
+
+  all_activity_code_choices <- unique(df$`Activity Code`)
+    all_institute_center_choices <- unique(df$`Institute/Center`)
+
+  # Set default selections
+  default_activity_code <- unique("F31")
+  default_institute_center <- unique(df$`Institute/Center`)
+
+
+
   # Update activity code choices
   observe({
-    updatePickerInput(session, "activity_code", choices = unique(df$`Activity Code`), selected = unique(df$`Activity Code`))
+    updatePickerInput(session, "activity_code", choices = all_activity_code_choices, selected = default_activity_code)
   })
 
   # Update institute/center choices
   observe({
-    updatePickerInput(session, "institute_center", choices = unique(df$`Institute/Center`), selected = unique(df$`Institute/Center`))
+    updatePickerInput(session, "institute_center", choices = all_institute_center_choices, selected = default_institute_center)
   })
 
   output$MainPlot <- renderPlot({
@@ -50,9 +64,20 @@ server <- function(input, output, session) {
               plot.title = element_text(size = 20, hjust = 0.5)) # Increase title size
     )
 
+    # Check if the data frame is empty
     if (nrow(data) == 0) {
-  stop("The data frame 'data' is empty. Please check your data source or filtering operations.")
-}
+      # Display a default plot
+      ggplot() +
+        theme_void() +
+        theme(
+          text = element_text(size = 26, hjust = 0.5, vjust = 0.5)
+        ) +
+        # set the text to be in the top plot
+        ggtitle("Loading data, please wait...") +
+        theme(plot.title = element_text(size = 20, hjust = 0.5))
+
+
+    } else {
 
     dollar_plot <- (
         ggplot(data = data, aes(x = `Institute/Center`, y = `Total Funding`, fill = `Activity Code`))
@@ -85,6 +110,9 @@ server <- function(input, output, session) {
         height <- 40
         options(repr.plot.width = width, repr.plot.height = height)
         combined_plot <- (success_plot / dollar_plot) / funding_vs_success_plot
+        #sleep for 5 seconds
+        Sys.sleep(5)
         combined_plot
+    }
   })
 }
