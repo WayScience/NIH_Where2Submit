@@ -20,7 +20,7 @@ output_data_path = pathlib.Path(
     "../../data/All_academic_projects_funded_by_NIH_cleaned.parquet"
 ).resolve()
 # get the sheet names in the excel file
-academic_data = pd.read_excel(academic_data_path, sheet_name="#205C")
+academic_data = pd.read_excel(academic_data_path, sheet_name="#205C", skiprows=2)
 print(academic_data.shape)
 academic_data.head()
 
@@ -28,23 +28,12 @@ academic_data.head()
 # In[3]:
 
 
-# drop the first row and the column names
-academic_data = academic_data.drop(0)
-academic_data.columns = academic_data.iloc[0]
-academic_data = academic_data.drop(1)
-print(academic_data.shape)
-academic_data.head()
-
-
-# In[4]:
-
-
 # drop activity codes that equal to 'Total'
 academic_data = academic_data[academic_data["Activity Code"] != "Total"]
 print(academic_data.shape)
 
 
-# In[5]:
+# In[4]:
 
 
 # move the Activity Code to the first column
@@ -52,13 +41,13 @@ academic_data.insert(0, "Activity Code", academic_data.pop("Activity Code"))
 academic_data.head()
 
 
-# In[6]:
+# In[5]:
 
 
 academic_data["Mechanism/Funding Source"].value_counts()
 
 
-# In[7]:
+# In[6]:
 
 
 # keep only the Other Mechanisms - Direct and RPG - Direct for mechanisms
@@ -71,7 +60,7 @@ print(academic_data.shape)
 academic_data.head()
 
 
-# In[8]:
+# In[7]:
 
 
 # remove OD COMMON FUND, FIC, OD ORIP
@@ -82,7 +71,7 @@ print(academic_data.shape)
 academic_data.head()
 
 
-# In[9]:
+# In[8]:
 
 
 # write the cleaned data to a parquet file
