@@ -1,0 +1,21 @@
+name: NIH_R_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - r-essentials
+  - r-base=4.1.1
+  - jupyter
+  - r-irkernel
+  - r-ggplot2
+  - r-tidyverse
+  - r-dplyr
+  - r-arrow
+  - r-patchwork
+  - r-ggextra
+  - r-devtools
+  - r-shiny
+  - r-ggplotify
+  - r-rsconnect
+  - r-shinyWidgets
+  - r-BH
