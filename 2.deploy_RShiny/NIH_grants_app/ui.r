@@ -1,3 +1,4 @@
+# server layout for the landing page
 library(shiny)
 library(shinyWidgets)
 library(rsconnect)

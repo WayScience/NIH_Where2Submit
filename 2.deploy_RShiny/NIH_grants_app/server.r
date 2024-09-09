@@ -1,3 +1,4 @@
+# this is the R shiny app logic that will be deployed to shinyapps.io
 library(shiny)
 library(ggplot2)
 library(dplyr)
@@ -110,8 +111,6 @@ server <- function(input, output, session) {
         height <- 40
         options(repr.plot.width = width, repr.plot.height = height)
         combined_plot <- (success_plot / dollar_plot) / funding_vs_success_plot
-        #sleep for 5 seconds
-        Sys.sleep(5)
         combined_plot
     }
   })
